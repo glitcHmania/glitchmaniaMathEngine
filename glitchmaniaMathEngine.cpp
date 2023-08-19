@@ -93,5 +93,6 @@ int main()
 
     GMEMatrix mat0(2, 2, { 3,4,1,2 });
     mat0.getInverse().show();
+    mat0.getIdentity().show();
     return 0;
 }

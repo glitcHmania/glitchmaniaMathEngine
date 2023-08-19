@@ -34,16 +34,16 @@ namespace GMEngine {
 			//Multiplication
 		GMEMatrix operator*(const GMEMatrix& mat) const;
 			//Misc
-		void show();
+		void show() const;
 		void makeIdentity();
-		GMEMatrix getIdentity();
-		GMEMatrix getTranspose();
-		GMEMatrix getMinorMatrix(int selectedRow, int selectedCol);
-		float getDeterminant();
-		float getCofactor(int selectedRow, int selectedCol);
-		GMEMatrix getCofactorMatrix();
-		GMEMatrix getAdjointMatrix();
-		GMEMatrix getInverse();
+		float getDeterminant() const;
+		float getCofactor(int selectedRow, int selectedCol) const;
+		GMEMatrix getIdentity() const;
+		GMEMatrix getTranspose() const;
+		GMEMatrix getMinorMatrix(int selectedRow, int selectedCol) const;
+		GMEMatrix getCofactorMatrix() const;
+		GMEMatrix getAdjointMatrix() const;
+		GMEMatrix getInverse() const;
 
 		const int rows;
 		const int cols;

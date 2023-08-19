@@ -141,7 +141,7 @@ GMEngine::GMEMatrix GMEngine::GMEMatrix::operator*(const GMEMatrix& mat) const
 	return GMEMatrix(rows, mat.cols, container);
 }
 
-void GMEngine::GMEMatrix::show()
+void GMEngine::GMEMatrix::show() const
 {
 	std::cout << "[";
 	for (int i = 0; i < rows; i++)
@@ -172,14 +172,18 @@ void GMEngine::GMEMatrix::makeIdentity()
 	}
 }
 
-GMEngine::GMEMatrix GMEngine::GMEMatrix::getIdentity()
+GMEngine::GMEMatrix GMEngine::GMEMatrix::getIdentity() const
 {
-	GMEMatrix temp(rows, cols);
-	temp.makeIdentity();
-	return temp;
+	assert(rows == cols);
+	std::vector<float> container(nElements,0);
+	for (int i = 0; i < nElements; i += (rows + 1))
+	{
+		container[i] = 1;
+	}
+	return GMEMatrix(rows,cols,container);
 }
 
-GMEngine::GMEMatrix GMEngine::GMEMatrix::getTranspose()
+GMEngine::GMEMatrix GMEngine::GMEMatrix::getTranspose() const
 {
 	GMEMatrix transpose(cols, rows);
 	for (int i = 0; i < rows; i++)
@@ -192,7 +196,7 @@ GMEngine::GMEMatrix GMEngine::GMEMatrix::getTranspose()
 	return transpose;
 }
 
-GMEngine::GMEMatrix GMEngine::GMEMatrix::getMinorMatrix( int selectedRow, int selectedCol )
+GMEngine::GMEMatrix GMEngine::GMEMatrix::getMinorMatrix( int selectedRow, int selectedCol ) const
 {
 	std::vector<float> container;
 	if (rows > 1 && cols > 1)
@@ -209,7 +213,7 @@ GMEngine::GMEMatrix GMEngine::GMEMatrix::getMinorMatrix( int selectedRow, int se
 	return GMEMatrix(rows - 1, cols - 1, container);
 }
 
-float GMEngine::GMEMatrix::getDeterminant()
+float GMEngine::GMEMatrix::getDeterminant() const
 {
 	assert(rows == cols);
 	if (rows == 1)
@@ -231,7 +235,7 @@ float GMEngine::GMEMatrix::getDeterminant()
 	}
 }
 
-float GMEngine::GMEMatrix::getCofactor(int selectedRow, int selectedCol)
+float GMEngine::GMEMatrix::getCofactor(int selectedRow, int selectedCol) const
 {
 	if((selectedRow + selectedCol) % 2 == 0)
 		return getMinorMatrix(selectedRow, selectedCol).getDeterminant() ;
@@ -239,7 +243,7 @@ float GMEngine::GMEMatrix::getCofactor(int selectedRow, int selectedCol)
 		return -getMinorMatrix(selectedRow, selectedCol).getDeterminant();
 }
 
-GMEngine::GMEMatrix GMEngine::GMEMatrix::getCofactorMatrix()
+GMEngine::GMEMatrix GMEngine::GMEMatrix::getCofactorMatrix() const
 {
 	std::vector<float> container(nElements);
 	for (int i = 0; i < cols; i++)
@@ -252,12 +256,12 @@ GMEngine::GMEMatrix GMEngine::GMEMatrix::getCofactorMatrix()
 	return GMEMatrix(rows, cols, container);
 }
 
-GMEngine::GMEMatrix GMEngine::GMEMatrix::getAdjointMatrix()
+GMEngine::GMEMatrix GMEngine::GMEMatrix::getAdjointMatrix() const
 {
 	return getCofactorMatrix().getTranspose();
 }
 
-GMEngine::GMEMatrix GMEngine::GMEMatrix::getInverse()
+GMEngine::GMEMatrix GMEngine::GMEMatrix::getInverse() const
 {
 	float det = getDeterminant();
 	if (det != 0)
