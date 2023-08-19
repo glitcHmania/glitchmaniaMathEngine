@@ -3,15 +3,16 @@
 #include <vector>
 #include <assert.h>
 
+//I implemented this matrix as a column-major. I may change this to row-major matrix if I need it for Direct3D.
+	//    0    3    6
+	//    1    4    7
+	//    2    5    8
+
 GMEngine::GMEMatrix::GMEMatrix()
 	:
 	rows(3),
 	cols(3)
 {
-	//I implemented this matrix as a column-major. I may change this to row-major matrix if I need it for Direct3D.
-	//    0    3    6
-	//    1    4    7
-	//    2    5    8
 	dataPtr = new float[nElements];
 
 	for (int i = 0; i < nElements; i++)
@@ -26,6 +27,7 @@ GMEngine::GMEMatrix::GMEMatrix(int in_rows, int in_cols)
 	cols(in_cols)
 {
 	dataPtr = new float[nElements];
+
 	for (int i = 0; i < nElements; i++)
 	{
 		dataPtr[i] = 0;
@@ -37,13 +39,11 @@ GMEngine::GMEMatrix::GMEMatrix(int in_rows, int in_cols, std::vector<float> data
 	rows(in_rows),
 	cols(in_cols)
 {
-	dataPtr = new float[rows * cols];
-	for (int i = 0; i < rows; i++)
+	dataPtr = new float[nElements];
+
+	for (int i = 0; i < nElements; i++)
 	{
-		for (int j = 0; j < cols; j++)
-		{
-			dataPtr[j * rows + i] = dataContainer[j * rows + i];
-		}
+		dataPtr[i] = dataContainer[i];
 	}
 }
 
@@ -59,7 +59,6 @@ GMEngine::GMEMatrix& GMEngine::GMEMatrix::operator=(const GMEMatrix& mat)
 GMEngine::GMEMatrix::~GMEMatrix()
 {
 	delete[] dataPtr;
-	dataPtr = nullptr;
 }
 
 GMEngine::GMEMatrix& GMEngine::GMEMatrix::operator+=(const GMEMatrix& mat)
@@ -75,13 +74,13 @@ GMEngine::GMEMatrix& GMEngine::GMEMatrix::operator+=(const GMEMatrix& mat)
 GMEngine::GMEMatrix GMEngine::GMEMatrix::operator+(const GMEMatrix& mat) const
 {
 	assert(rows == mat.rows && cols == mat.cols);
-	GMEMatrix newMatrix;
+	std::vector<float> container;
 	for (int i = 0; i < nElements; i++)
 	{
-		newMatrix.dataPtr[i] += mat.dataPtr[i];
+		container.emplace_back(dataPtr[i] + mat.dataPtr[i]);
 	}
 
-	return newMatrix;
+	return GMEMatrix(rows,cols,container);
 }
 
 GMEngine::GMEMatrix& GMEngine::GMEMatrix::operator-=(const GMEMatrix& mat)
@@ -97,12 +96,13 @@ GMEngine::GMEMatrix& GMEngine::GMEMatrix::operator-=(const GMEMatrix& mat)
 GMEngine::GMEMatrix GMEngine::GMEMatrix::operator-(const GMEMatrix& mat) const
 {
 	assert(rows == mat.rows && cols == mat.cols);
-	GMEMatrix newMatrix;
+	std::vector<float> container;
 	for (int i = 0; i < nElements; i++)
 	{
-		newMatrix.dataPtr[i] -= mat.dataPtr[i];
+		container.emplace_back(dataPtr[i] - mat.dataPtr[i]);
 	}
-	return newMatrix;
+
+	return GMEMatrix(rows, cols, container);
 }
 
 GMEngine::GMEMatrix& GMEngine::GMEMatrix::operator*=(float n)
@@ -116,12 +116,13 @@ GMEngine::GMEMatrix& GMEngine::GMEMatrix::operator*=(float n)
 
 GMEngine::GMEMatrix GMEngine::GMEMatrix::operator*(float n) const
 {
-	GMEMatrix newMatrix = *this;
+	std::vector<float> container;
 	for (int i = 0; i < nElements; i++)
 	{
-		newMatrix.dataPtr[i] *= n;
+		container.emplace_back(dataPtr[i] * n);
 	}
-	return newMatrix;
+
+	return GMEMatrix(rows, cols, container);
 }
 
 GMEngine::GMEMatrix GMEngine::GMEMatrix::operator*(const GMEMatrix& mat) const
@@ -157,4 +158,113 @@ void GMEngine::GMEMatrix::show()
 			std::cout << std::endl;
 	}
 	std::cout << "]" << std::endl;
+}
+
+void GMEngine::GMEMatrix::makeIdentity()
+{
+	assert(rows == cols);
+	for (int i = 0; i < nElements; i++)
+	{
+		if (i % (rows + 1) == 0)
+			dataPtr[i] = 1;
+		else
+			dataPtr[i] = 0;
+	}
+}
+
+GMEngine::GMEMatrix GMEngine::GMEMatrix::getIdentity()
+{
+	GMEMatrix temp(rows, cols);
+	temp.makeIdentity();
+	return temp;
+}
+
+GMEngine::GMEMatrix GMEngine::GMEMatrix::getTranspose()
+{
+	GMEMatrix transpose(cols, rows);
+	for (int i = 0; i < rows; i++)
+	{
+		for (int j = 0; j < cols; j++)
+		{
+			transpose.dataPtr[i * cols + j] = dataPtr[j * rows + i];
+		}
+	}
+	return transpose;
+}
+
+GMEngine::GMEMatrix GMEngine::GMEMatrix::getMinorMatrix( int selectedRow, int selectedCol )
+{
+	std::vector<float> container;
+	if (rows > 1 && cols > 1)
+	{
+		for (int i = 0; i < cols; i++)
+		{
+			for (int j = 0; j < rows; j++)
+			{
+				if( i!= selectedCol && j != selectedRow )
+					container.emplace_back(dataPtr[i * cols + j]);
+			}
+		}
+	}
+	return GMEMatrix(rows - 1, cols - 1, container);
+}
+
+float GMEngine::GMEMatrix::getDeterminant()
+{
+	assert(rows == cols);
+	if (rows == 1)
+	{
+		return dataPtr[0];
+	}
+	else
+	{
+		float det = 0.0f;
+		for (int i = 0; i < cols; i++)
+		{
+			auto subMatrix = getMinorMatrix(0, i);
+			if (i % 2 == 0)
+				det += dataPtr[i * rows] * subMatrix.getDeterminant();
+			else
+				det -= dataPtr[i * rows] * subMatrix.getDeterminant();
+		}
+		return det;
+	}
+}
+
+float GMEngine::GMEMatrix::getCofactor(int selectedRow, int selectedCol)
+{
+	if((selectedRow + selectedCol) % 2 == 0)
+		return getMinorMatrix(selectedRow, selectedCol).getDeterminant() ;
+	else
+		return -getMinorMatrix(selectedRow, selectedCol).getDeterminant();
+}
+
+GMEngine::GMEMatrix GMEngine::GMEMatrix::getCofactorMatrix()
+{
+	std::vector<float> container(nElements);
+	for (int i = 0; i < cols; i++)
+	{
+		for (int j = 0; j < rows; j++)
+		{
+			container[i * rows + j] = getCofactor(j, i);
+		}
+	}
+	return GMEMatrix(rows, cols, container);
+}
+
+GMEngine::GMEMatrix GMEngine::GMEMatrix::getAdjointMatrix()
+{
+	return getCofactorMatrix().getTranspose();
+}
+
+GMEngine::GMEMatrix GMEngine::GMEMatrix::getInverse()
+{
+	float det = getDeterminant();
+	if (det != 0)
+	{
+		float detInv = 1.0f / det;
+		return  getAdjointMatrix() * detInv;
+	}
+	else
+		return *this;
 }

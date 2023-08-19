@@ -91,10 +91,7 @@ int main()
 
     //Matrix Tests
 
-    GMEMatrix mat0(3, 2, { 0,1,2,3,4,5 });
-    mat0.show();
-    GMEMatrix mat1(2, 3, { 0,1,2,3,4,5 });
-    mat1.show();
-    auto mat2 = mat0 * mat1;
-    mat2.show();
+    GMEMatrix mat0(2, 2, { 3,4,1,2 });
+    mat0.getInverse().show();
+    return 0;
 }

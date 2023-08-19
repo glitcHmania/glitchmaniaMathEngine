@@ -1,6 +1,11 @@
 #pragma once
 #include <vector>
 
+//I implemented this matrix as a column-major. I may change this to row-major matrix if I need it for Direct3D.
+	//    0    3    6
+	//    1    4    7
+	//    2    5    8
+
 namespace GMEngine {
 	class GMEMatrix
 	{
@@ -20,16 +25,25 @@ namespace GMEngine {
 			//Addition
 		GMEMatrix& operator+=(const GMEMatrix& mat);
 		GMEMatrix operator+(const GMEMatrix& mat) const;
-		//Subtraction
+			//Subtraction
 		GMEMatrix& operator-=(const GMEMatrix& mat);
 		GMEMatrix operator-(const GMEMatrix& mat) const;
-		//Scalar Multiplication
+			//Scalar Multiplication
 		GMEMatrix& operator*=(const float n);
 		GMEMatrix operator*(const float n) const;
-		//Multiplication
+			//Multiplication
 		GMEMatrix operator*(const GMEMatrix& mat) const;
-
+			//Misc
 		void show();
+		void makeIdentity();
+		GMEMatrix getIdentity();
+		GMEMatrix getTranspose();
+		GMEMatrix getMinorMatrix(int selectedRow, int selectedCol);
+		float getDeterminant();
+		float getCofactor(int selectedRow, int selectedCol);
+		GMEMatrix getCofactorMatrix();
+		GMEMatrix getAdjointMatrix();
+		GMEMatrix getInverse();
 
 		const int rows;
 		const int cols;

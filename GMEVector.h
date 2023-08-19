@@ -34,9 +34,8 @@ namespace GMEngine {
 		GMEVector operator%(const GMEVector& vec) const;
 		GMEVector& operator%=(const GMEVector& vec);
 		GMEVector cross(const GMEVector& vec) const;
-		//Magnitude
+		//Misc
 		float getMagnitude();
-		//Normalization
 		void normalize();
 		GMEVector getNormalized();
 
