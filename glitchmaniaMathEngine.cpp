@@ -2,8 +2,8 @@
 //
 
 #include <iostream>
-#include "GMEVector.h"
-#include "GMEMatrix.h"
+#include "GMVector.h"
+#include "GMMatrix.h"
 #include <vector>
 using namespace GMEngine;
 
@@ -14,62 +14,62 @@ int main()
 
     //Vector Tests
         //Constructor Test
-    //GMEVector vec0;
-    //GMEVector vec1(1, 2, 3);
-    //GMEVector vec2(vec1);
-    //GMEVector vec3 = vec1;
+    //GMVector vec0;
+    //GMVector vec1(1, 2, 3);
+    //GMVector vec2(vec1);
+    //GMVector vec3 = vec1;
 
         //Addition Test
-    //GMEVector vec0(1, 2, 3);
-    //GMEVector vec1(4, 5, 6);
-    //GMEVector vec2 = vec0 + vec1;
-    //GMEVector vec3(5, 5, 5);
+    //GMVector vec0(1, 2, 3);
+    //GMVector vec1(4, 5, 6);
+    //GMVector vec2 = vec0 + vec1;
+    //GMVector vec3(5, 5, 5);
     //vec3 += vec0;
 
         //Subtraction Test
-    //GMEVector vec0(1, 2, 3);
-    //GMEVector vec1(4, 5, 6);
-    //GMEVector vec2 = vec1 - vec0;
-    //GMEVector vec3(5, 5, 5);
+    //GMVector vec0(1, 2, 3);
+    //GMVector vec1(4, 5, 6);
+    //GMVector vec2 = vec1 - vec0;
+    //GMVector vec3(5, 5, 5);
     //vec3 -= vec0;
 
         //Scalar Multiplication Test
-    //GMEVector vec0(1, 2, 3);
-    //GMEVector vec1 = vec0 * 10.0f;
-    //GMEVector vec2(4, 5, 6);
+    //GMVector vec0(1, 2, 3);
+    //GMVector vec1 = vec0 * 10.0f;
+    //GMVector vec2(4, 5, 6);
     //vec2 *= 10.0f;
-    //GMEVector vec3(5, 5, 5);
+    //GMVector vec3(5, 5, 5);
     //vec3 *= -5.0f;
 
         //Scalar Divison Test
-    //GMEVector vec0(10, 20, 30);
-    //GMEVector vec1 = vec0 / 10.0f;
-    //GMEVector vec2(40, 50, 60);
+    //GMVector vec0(10, 20, 30);
+    //GMVector vec1 = vec0 / 10.0f;
+    //GMVector vec2(40, 50, 60);
     //vec2 /= 10.0f;
-    //GMEVector vec3(50, 50, 50);
+    //GMVector vec3(50, 50, 50);
     //vec3 *= -5.0f;
 
         //Dot Product Test
-    //GMEVector vec0(1, 2, 3);
-    //GMEVector vec1(4, 5, 6);
+    //GMVector vec0(1, 2, 3);
+    //GMVector vec1(4, 5, 6);
     //testFloat0 = vec0 * vec1;
-    //GMEVector vec2(1, 2, 3);
-    //GMEVector vec3(4, 5, 6);
+    //GMVector vec2(1, 2, 3);
+    //GMVector vec3(4, 5, 6);
     //testFloat1 = vec2.dot(vec3);
 
         //Cross Product Test
-    //GMEVector vec0(1, 2, 3);
-    //GMEVector vec1(4, 5, 6);
-    //GMEVector vec2 = vec0 % vec1;
-    //GMEVector vec3 = vec0.cross(vec1);
+    //GMVector vec0(1, 2, 3);
+    //GMVector vec1(4, 5, 6);
+    //GMVector vec2 = vec0 % vec1;
+    //GMVector vec3 = vec0.cross(vec1);
 
         //Magnitude And Normalization Test
-    //GMEVector vec0(1, 2, 3);
+    //GMVector vec0(1, 2, 3);
     //testFloat0 = vec0.getMagnitude();
-    //GMEVector vec1(4, 5, 6);
+    //GMVector vec1(4, 5, 6);
     //vec1.normalize();
-    //GMEVector vec2(7, 8, 9);
-    //GMEVector vec3 = vec2.getNormalized();
+    //GMVector vec2(7, 8, 9);
+    //GMVector vec3 = vec2.getNormalized();
 
         //Printing
     //std::cout << "vec0 x: " << vec0.x << std::endl;
@@ -91,8 +91,9 @@ int main()
 
     //Matrix Tests
 
-    GMEMatrix mat0(2, 2, { 3,4,1,2 });
-    mat0.getInverse().show();
-    mat0.getIdentity().show();
+    GMMatrix mat0(3, 3, { 0,0,0,0,0,-1,0,1,0 });
+    GMVector vec0(0, 1, 0);
+    auto vec1 = mat0 * vec0;
+    vec1.show();
     return 0;
 }

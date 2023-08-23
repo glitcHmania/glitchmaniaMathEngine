@@ -18,18 +18,24 @@
     <ClCompile Include="glitchmaniaMathEngine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GMEVector.cpp">
+    <ClCompile Include="GMVector.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GMEMatrix.cpp">
+    <ClCompile Include="GMMatrix.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GMQuaternion.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GMEVector.h">
+    <ClInclude Include="GMVector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GMEMatrix.h">
+    <ClInclude Include="GMMatrix.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GMQuaternion.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

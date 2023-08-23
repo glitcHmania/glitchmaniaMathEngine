@@ -128,12 +128,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="glitchmaniaMathEngine.cpp" />
-    <ClCompile Include="GMEMatrix.cpp" />
-    <ClCompile Include="GMEVector.cpp" />
+    <ClCompile Include="GMMatrix.cpp" />
+    <ClCompile Include="GMQuaternion.cpp" />
+    <ClCompile Include="GMVector.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GMEMatrix.h" />
-    <ClInclude Include="GMEVector.h" />
+    <ClInclude Include="GMMatrix.h" />
+    <ClInclude Include="GMQuaternion.h" />
+    <ClInclude Include="GMVector.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
