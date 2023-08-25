@@ -127,6 +127,8 @@ GMEngine::GMMatrix GMEngine::GMMatrix::operator*(float n) const
 
 GMEngine::GMVector GMEngine::GMMatrix::operator*(const GMVector vec)
 {
+	//Vectors used in GME has 3 dimensions so this operation is fixed for 3x3 matricies.
+	//I may change this if I need more dimensions in my vectors.
 	if (rows == 3 && cols == 3)
 	{
 		return GMVector(dataPtr[0] * vec.x + dataPtr[3] * vec.y + dataPtr[6] * vec.z,

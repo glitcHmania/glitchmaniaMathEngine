@@ -31,9 +31,11 @@ namespace GMEngine
 		GMQuaternion& operator*=(const GMQuaternion& quat);
 		GMQuaternion operator*(const GMQuaternion& quat) const;
 			//Misc
-		float getNorm();
+		float getNorm() const;
 		void normalize();
-
+		void convertToUnitNorm();
+		GMQuaternion getConjugate() const;
+		GMQuaternion getInverse() const;
 
 		//Elements
 		float scalar;

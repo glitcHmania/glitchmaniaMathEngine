@@ -1,5 +1,6 @@
 #include "GMQuaternion.h"
 #include "GMVector.h"
+#define _USE_MATH_DEFINES
 #include <math.h>
 
 GMEngine::GMQuaternion::GMQuaternion()
@@ -72,9 +73,8 @@ GMEngine::GMQuaternion GMEngine::GMQuaternion::operator*(const float n) const
 
 GMEngine::GMQuaternion GMEngine::GMQuaternion::multiply(const GMQuaternion& quat) const
 {
-	float s = scalar * quat.scalar - vector.dot(quat.vector);
-	GMVector imaginary = quat.vector * scalar + vector * quat.scalar + vector.cross(quat.vector);
-	return GMQuaternion(s, imaginary);
+	return GMQuaternion(scalar * quat.scalar - vector.dot(quat.vector),
+		quat.vector * scalar + vector * quat.scalar + vector.cross(quat.vector));
 }
 
 GMEngine::GMQuaternion& GMEngine::GMQuaternion::operator*=(const GMQuaternion& quat)
@@ -88,7 +88,7 @@ GMEngine::GMQuaternion GMEngine::GMQuaternion::operator*(const GMQuaternion& qua
 	return multiply(quat);
 }
 
-float GMEngine::GMQuaternion::getNorm()
+float GMEngine::GMQuaternion::getNorm() const
 {
 	return sqrt(scalar * scalar + vector * vector);
 }
@@ -102,4 +102,29 @@ void GMEngine::GMQuaternion::normalize()
 		scalar *= normInv;
 		vector *= normInv;
 	}
+}
+
+void GMEngine::GMQuaternion::convertToUnitNorm()
+{
+	float radian = scalar * (M_PI / 180.0f);
+	vector.normalize();
+	scalar = cosf(radian * 0.5f);
+	vector *= sinf(radian * 0.5f);
+}
+
+GMEngine::GMQuaternion GMEngine::GMQuaternion::getConjugate() const
+{
+	return GMQuaternion(scalar, vector * (-1));
+}
+
+GMEngine::GMQuaternion GMEngine::GMQuaternion::getInverse() const
+{
+	float norm = getNorm();
+	auto conj = getConjugate();
+
+	float abs = 1.0f;
+	if (norm != 0.0f)
+		abs = 1 / (norm * norm);
+
+	return GMQuaternion(conj.scalar * abs, conj.vector * abs);
 }

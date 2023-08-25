@@ -4,13 +4,14 @@
 #include <iostream>
 #include "GMVector.h"
 #include "GMMatrix.h"
+#include "GMQuaternion.h"
 #include <vector>
 using namespace GMEngine;
 
 int main()
 {
     float testFloat0 = 0.0f, testFloat1 = 0.0f;
-    //Please uncomment the section you want to test and the printing section below.
+    //Please uncomment the section you want to test and the printing section below for vectors.
 
     //Vector Tests
         //Constructor Test
@@ -89,11 +90,21 @@ int main()
 
 /////////////////////////////////////////////////////////////////////////////////////
 
-    //Matrix Tests
+        //Matrix Tests
+    //GMMatrix mat(3, 3,{
+    //    0, 0, 0,
+    //    0, 0, -1,
+    //    0, 1, 0 });
+    //
+    //GMVector vec0(0, 1, 0);
+    //GMVector vec1 = mat * vec0;
+    //vec1.show();
 
-    GMMatrix mat0(3, 3, { 0,0,0,0,0,-1,0,1,0 });
-    GMVector vec0(0, 1, 0);
-    auto vec1 = mat0 * vec0;
-    vec1.show();
+        //Quaternion Tests
+    GMVector vec(0, 1, 0);
+    GMVector axis(1, 0, 0);
+    auto rotatedVector = vec.rotate(90, axis);
+    rotatedVector.show();
+
     return 0;
 }

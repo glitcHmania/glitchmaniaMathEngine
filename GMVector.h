@@ -36,10 +36,11 @@ namespace GMEngine
 		GMVector& operator%=(const GMVector& vec);
 		GMVector cross(const GMVector& vec) const;
 			//Misc
+		void show();
 		float getMagnitude();
 		void normalize();
 		GMVector getNormalized();
-		void show();
+		GMVector rotate(float angle, GMVector& axis);
 
 		//Elements
 		float x;

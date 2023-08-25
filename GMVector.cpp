@@ -2,6 +2,7 @@
 #include <assert.h>
 #include <math.h>
 #include <iostream>
+#include "GMQuaternion.h"
 
 GMEngine::GMVector::GMVector()
 	:
@@ -135,6 +136,15 @@ GMEngine::GMVector GMEngine::GMVector::cross(const GMVector& vec) const
 	);
 }
 
+void GMEngine::GMVector::show()
+{
+	std::cout << "[";
+	std::cout << x << std::endl;
+	std::cout << " " << y << std::endl;
+	std::cout << " " << z;
+	std::cout << "]" << std::endl;
+}
+
 float GMEngine::GMVector::getMagnitude()
 {
 	return sqrt(x * x + y * y + z * z);
@@ -162,11 +172,17 @@ GMEngine::GMVector GMEngine::GMVector::getNormalized()
 	return GMVector(x * magInv, y * magInv, z * magInv);
 }
 
-void GMEngine::GMVector::show()
+GMEngine::GMVector GMEngine::GMVector::rotate(float angle, GMVector& axis)
 {
-	std::cout << "[";
-	std::cout << x << std::endl;
-	std::cout << " " << y << std::endl;
-	std::cout << " " << z;
-	std::cout << "]" << std::endl;
+	//Normalize the axis, create the pure and real quaternions.
+	axis.normalize();
+	GMQuaternion pureQuat(0, (*this));
+	GMQuaternion realQuat(angle, axis);
+
+	//Convert real quaternion to unit norm and get its inverse to use for divison operation.
+	realQuat.convertToUnitNorm();
+	auto realQuatInv = realQuat.getInverse();
+	auto rotatedQuat = realQuat * pureQuat * realQuatInv;
+
+	return rotatedQuat.vector;
 }
