@@ -6,7 +6,7 @@
 GMEngine::GMQuaternion::GMQuaternion()
 	:
 	scalar(0.0f),
-	vector(0,0,0,1)
+	vector(0,0,0)
 {
 }
 

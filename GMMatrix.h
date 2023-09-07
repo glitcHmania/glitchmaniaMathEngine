@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include "GMVector.h"
+#include "GMVector4.h"
 
 //I implemented this matrix as a column-major. I may change this to row-major matrix if I need it for Direct3D.
 	//	0	4	8	12
@@ -36,6 +37,7 @@ namespace GMEngine
 		GMMatrix operator*(const float n) const;
 			//Vector Multiplication
 		GMVector operator*(const GMVector vec);
+		GMVector4 operator*(const GMVector4 vec);
 			//Multiplication
 		GMMatrix operator*(const GMMatrix& mat) const;
 			//Misc

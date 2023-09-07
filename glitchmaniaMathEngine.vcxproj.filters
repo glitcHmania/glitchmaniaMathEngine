@@ -27,6 +27,9 @@
     <ClCompile Include="GMQuaternion.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GMVector4.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GMVector.h">
@@ -36,6 +39,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GMQuaternion.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GMVector4.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

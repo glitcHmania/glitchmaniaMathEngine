@@ -131,11 +131,13 @@
     <ClCompile Include="GMMatrix.cpp" />
     <ClCompile Include="GMQuaternion.cpp" />
     <ClCompile Include="GMVector.cpp" />
+    <ClCompile Include="GMVector4.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GMMatrix.h" />
     <ClInclude Include="GMQuaternion.h" />
     <ClInclude Include="GMVector.h" />
+    <ClInclude Include="GMVector4.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

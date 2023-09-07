@@ -128,10 +128,22 @@ GMEngine::GMMatrix GMEngine::GMMatrix::operator*(float n) const
 
 GMEngine::GMVector GMEngine::GMMatrix::operator*(const GMVector vec)
 {
-	//Vectors used in GME has 4 dimensions so this operation is fixed for 4 by 4 matricies.
-	if (rows == 4 && cols == 4)
+	//GMVector has 3 dimensions so this operation is fixed for 3 by 3 matricies.
+	if (rows == 3 && cols == 3)
 	{
 		return GMVector(
+			dataPtr[0] * vec.x + dataPtr[3] * vec.y + dataPtr[6] * vec.z,
+			dataPtr[1] * vec.x + dataPtr[4] * vec.y + dataPtr[7] * vec.z,
+			dataPtr[2] * vec.x + dataPtr[5] * vec.y + dataPtr[8] * vec.z);
+	}
+}
+
+GMEngine::GMVector4 GMEngine::GMMatrix::operator*(const GMVector4 vec)
+{
+	//GMVector4 has 4 dimensions so this operation is fixed for 4 by 4 matricies.
+	if (rows == 4 && cols == 4)
+	{
+		return GMVector4(
 			dataPtr[0] * vec.x + dataPtr[4] * vec.y + dataPtr[8] * vec.z + dataPtr[12] * vec.w,
 			dataPtr[1] * vec.x + dataPtr[5] * vec.y + dataPtr[9] * vec.z + dataPtr[13] * vec.w,
 			dataPtr[2] * vec.x + dataPtr[6] * vec.y + dataPtr[10] * vec.z + dataPtr[14] * vec.w,
