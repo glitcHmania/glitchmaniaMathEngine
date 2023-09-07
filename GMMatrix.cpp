@@ -4,14 +4,15 @@
 #include <assert.h>
 
 //I implemented this matrix as a column-major. I may change this to row-major matrix if I need it for Direct3D.
-	//    0    3    6
-	//    1    4    7
-	//    2    5    8
+	//	0	4	8	12
+	//	1	5	9	13	
+	//	2	6	10	14
+	//	3	7	11	15
 
 GMEngine::GMMatrix::GMMatrix()
 	:
-	rows(3),
-	cols(3)
+	rows(4),
+	cols(4)
 {
 	dataPtr = new float[nElements];
 
@@ -127,13 +128,14 @@ GMEngine::GMMatrix GMEngine::GMMatrix::operator*(float n) const
 
 GMEngine::GMVector GMEngine::GMMatrix::operator*(const GMVector vec)
 {
-	//Vectors used in GME has 3 dimensions so this operation is fixed for 3x3 matricies.
-	//I may change this if I need more dimensions in my vectors.
-	if (rows == 3 && cols == 3)
+	//Vectors used in GME has 4 dimensions so this operation is fixed for 4 by 4 matricies.
+	if (rows == 4 && cols == 4)
 	{
-		return GMVector(dataPtr[0] * vec.x + dataPtr[3] * vec.y + dataPtr[6] * vec.z,
-			dataPtr[1] * vec.x + dataPtr[4] * vec.y + dataPtr[7] * vec.z,
-			dataPtr[2] * vec.x + dataPtr[5] * vec.y + dataPtr[8] * vec.z);
+		return GMVector(
+			dataPtr[0] * vec.x + dataPtr[4] * vec.y + dataPtr[8] * vec.z + dataPtr[12] * vec.w,
+			dataPtr[1] * vec.x + dataPtr[5] * vec.y + dataPtr[9] * vec.z + dataPtr[13] * vec.w,
+			dataPtr[2] * vec.x + dataPtr[6] * vec.y + dataPtr[10] * vec.z + dataPtr[14] * vec.w,
+			dataPtr[3] * vec.x + dataPtr[7] * vec.y + dataPtr[11] * vec.z + dataPtr[15] * vec.w);
 	}
 }
 

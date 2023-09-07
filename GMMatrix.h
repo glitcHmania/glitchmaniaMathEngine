@@ -3,9 +3,10 @@
 #include "GMVector.h"
 
 //I implemented this matrix as a column-major. I may change this to row-major matrix if I need it for Direct3D.
-	//    0    3    6
-	//    1    4    7
-	//    2    5    8
+	//	0	4	8	12
+	//	1	5	9	13	
+	//	2	6	10	14
+	//	3	7	11	15
 
 namespace GMEngine
 {

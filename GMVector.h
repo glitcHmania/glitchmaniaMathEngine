@@ -7,6 +7,7 @@ namespace GMEngine
 		//Constructors
 		GMVector();
 		GMVector(float x, float y, float z);
+		GMVector(float x, float y, float z, float w);
 
 		//Copy Constructors
 		GMVector(const GMVector& vec);
@@ -46,5 +47,6 @@ namespace GMEngine
 		float x;
 		float y;
 		float z;
+		float w;
 	};
 }
