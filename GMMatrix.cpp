@@ -136,6 +136,7 @@ GMEngine::GMVector GMEngine::GMMatrix::operator*(const GMVector vec)
 			dataPtr[1] * vec.x + dataPtr[4] * vec.y + dataPtr[7] * vec.z,
 			dataPtr[2] * vec.x + dataPtr[5] * vec.y + dataPtr[8] * vec.z);
 	}
+	return GMVector();
 }
 
 GMEngine::GMVector4 GMEngine::GMMatrix::operator*(const GMVector4 vec)
@@ -149,6 +150,7 @@ GMEngine::GMVector4 GMEngine::GMMatrix::operator*(const GMVector4 vec)
 			dataPtr[2] * vec.x + dataPtr[6] * vec.y + dataPtr[10] * vec.z + dataPtr[14] * vec.w,
 			dataPtr[3] * vec.x + dataPtr[7] * vec.y + dataPtr[11] * vec.z + dataPtr[15] * vec.w);
 	}
+	return GMVector4();
 }
 
 GMEngine::GMMatrix GMEngine::GMMatrix::operator*(const GMMatrix& mat) const
